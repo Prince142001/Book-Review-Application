@@ -1,0 +1,19 @@
+{
+  "name": "book-review-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
