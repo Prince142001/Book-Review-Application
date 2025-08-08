@@ -1,7 +1,6 @@
-import express, { response } from "express";
+import express from "express";
 import books from "../data/books.js";
 import users from "../data/users.js";
-import axios from "axios";
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.get("/isbn/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const book = books[isbn];
 
-  if (!isbn) {
+  if (!book) {
     return res
       .status(404)
       .send({ msg: `Books not found with this ISBN: ${isbn}` });
@@ -30,7 +29,7 @@ router.get("/author/:author", (req, res) => {
     (book) => book.author.toLowerCase() === author.toLowerCase()
   );
 
-  if (!bookByAuthor) {
+  if (!bookByAuthor.length) {
     return res
       .status(404)
       .send({ msg: `Books not found with this Author: ${author}` });
@@ -46,7 +45,7 @@ router.get("/title/:title", (req, res) => {
     (book) => book.title.toLowerCase() === title.toLowerCase()
   );
 
-  if (!bookByTitle) {
+  if (!bookByTitle.length) {
     return res
       .status(404)
       .send({ msg: `Books not found with this Title: ${title}` });
@@ -56,16 +55,16 @@ router.get("/title/:title", (req, res) => {
 });
 
 // ++++++++++++++++++++ Task 5: Get book Review ++++++++++++++++++++
-router.get("/review/:review", (req, res) => {
-  const review = req.params.review;
-  const getBookReview = books[review];
+router.get("/review/:isbn", (req, res) => {
+  const isbn = req.params.isbn;
+  const getBookReview = books[isbn];
 
   if (!getBookReview) {
     return res
       .status(404)
-      .send({ msg: `Books not found with this ISBN: ${review}` });
+      .send({ msg: `Books not found with this ISBN: ${isbn}` });
   }
-  res.status(200).json(getBookReview.reviews);
+  res.status(200).json(getBookReview.reviews || {});
 });
 
 // ++++++++++++++++++++ Task 8: Add a book review ++++++++++++++++++++
@@ -87,6 +86,10 @@ router.post("/review/:isbn", (req, res) => {
   const book = books[isbn];
   if (!book) {
     return res.status(404).json({ error: `Book not found with ISBN ${isbn}` });
+  }
+
+  if (!book.reviews) {
+    book.reviews = {};
   }
 
   if (book.reviews[username]) {
@@ -125,6 +128,10 @@ router.put("/modify/:isbn", (req, res) => {
     return res.status(404).json({ error: `Book not found with ISBN ${isbn}` });
   }
 
+  if (!book.reviews) {
+    book.reviews = {};
+  }
+
   if (!book.reviews[username]) {
     return res.status(400).json({
       error:
@@ -159,6 +166,10 @@ router.delete("/delete/:isbn", (req, res) => {
   const book = books[isbn];
   if (!book) {
     return res.status(404).json({ error: `Book not found with ISBN ${isbn}` });
+  }
+
+  if (!book.reviews) {
+    book.reviews = {};
   }
 
   if (!book.reviews[username]) {

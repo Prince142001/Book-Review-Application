@@ -38,7 +38,7 @@ async function getBooksByTitle(title) {
   }
 }
 
-await getAllBooks();
-getBookByISBN("9780143128540");
-getBooksByAuthor("Yuval Noah Harari");
+// await getAllBooks();
+// getBookByISBN("9780143128540");
+// getBooksByAuthor("Yuval Noah Harari");
 await getBooksByTitle("The Road");

@@ -2,7 +2,6 @@ const books = {
   "9780143128540": {
     title: "Sapiens: A Brief History of Humankind",
     author: "Yuval Noah Harari",
-    reviews: {},
   },
   "9780307277785": {
     title: "The Road",
@@ -17,7 +16,11 @@ const books = {
   "9780061120084": {
     title: "To Kill a Mockingbird",
     author: "Harper Lee",
-    reviews: {},
+    reviews: {
+      prince: "Loved the characters and depth.",
+      alex: "A thought-provoking read on human history.",
+      sam: "Detailed but a bit long for me.",
+    },
   },
   "9780743273565": {
     title: "The Great Gatsby",
